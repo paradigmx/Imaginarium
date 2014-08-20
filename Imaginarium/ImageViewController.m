@@ -12,6 +12,7 @@
 @property (strong, nonatomic) UIImageView *imageView;
 @property (strong, nonatomic) UIImage *image;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 @end
 
 @implementation ImageViewController
@@ -27,7 +28,9 @@
 
 - (void)setImageURL:(NSURL *)imageURL {
     _imageURL = imageURL;
-    self.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:self.imageURL]];
+
+    // self.image = [UIImage imageWithData:[NSData dataWithContentsOfURL:self.imageURL]];
+    [self downloadImage];
 }
 
 - (UIImageView *)imageView {
@@ -43,6 +46,8 @@
     self.imageView.image = image;
     [self.imageView sizeToFit];
     [self updateContentSize];
+
+    [self.spinner stopAnimating];
 }
 
 - (void)updateContentSize {
@@ -56,6 +61,31 @@
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
     return self.imageView;
+}
+
+- (void)downloadImage {
+    self.image = nil;
+
+    if (self.imageURL) {
+        [self.spinner startAnimating];
+
+        NSURLRequest *request = [NSURLRequest requestWithURL:self.imageURL];
+        NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
+        NSURLSession *session = [NSURLSession sessionWithConfiguration:configuration];
+        // For ephemeral session configuration we can use completion handler, for background session we have to use delegate instead
+        NSURLSessionDownloadTask *task = [session downloadTaskWithRequest:request
+                                                        completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error) {
+                                                            if (!error) {
+                                                                if ([request.URL isEqual:self.imageURL]) {
+                                                                    // NOTE: the location and the downloaded content only accessible inside the block!
+                                                                    UIImage *image = [UIImage imageWithData:[NSData dataWithContentsOfURL:location]];
+                                                                    dispatch_async(dispatch_get_main_queue(), ^{ self.image = image; });
+                                                                    // [self performSelectorOnMainThread:@selector(setImage:) withObject:image waitUntilDone:NO];
+                                                                }
+                                                            }
+                                                        }];
+        [task resume];
+    }
 }
 
 @end
