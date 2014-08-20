@@ -33,7 +33,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="Rjq-0G-X2m" kind="push" identifier="naxxramas.jpg" id="WBJ-Wp-luV"/>
+                                    <segue destination="Rjq-0G-X2m" kind="push" identifier="naxxramas.png" id="WBJ-Wp-luV"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sao-i5-mf9">
@@ -74,9 +74,24 @@
                     <view key="view" contentMode="scaleToFill" id="KFb-1s-wnc">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lD8-fI-2lm">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </scrollView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="lD8-fI-2lm" secondAttribute="bottom" id="Tw0-RU-bJ3"/>
+                            <constraint firstItem="lD8-fI-2lm" firstAttribute="leading" secondItem="KFb-1s-wnc" secondAttribute="leading" id="VCu-qg-9YL"/>
+                            <constraint firstAttribute="trailing" secondItem="lD8-fI-2lm" secondAttribute="trailing" id="ajS-K7-LhB"/>
+                            <constraint firstItem="lD8-fI-2lm" firstAttribute="top" secondItem="KFb-1s-wnc" secondAttribute="top" id="uue-Jm-BMg"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Image" id="FBr-G3-qQT"/>
+                    <connections>
+                        <outlet property="scrollView" destination="lD8-fI-2lm" id="YK4-13-abO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Hfk-x5-iwJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -107,6 +122,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="u63-b9-sNi"/>
+        <segue reference="WBJ-Wp-luV"/>
     </inferredMetricsTieBreakers>
 </document>

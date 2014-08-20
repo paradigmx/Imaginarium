@@ -18,11 +18,11 @@
 // static const NSString *imageURLBase = @"https://x.paradigmx.net/download/assets/images/";
 static const NSString *imageURLBase = @"http://paradigmx.net/paradigmx/";
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(UIButton *)sender {
     if ([segue.destinationViewController isKindOfClass:[ImageViewController class]]) {
         ImageViewController *ivc = (ImageViewController *)segue.destinationViewController;
         ivc.imageURL = [NSURL URLWithString:[imageURLBase stringByAppendingString:segue.identifier]];
-        ivc.title = [segue.identifier capitalizedString];
+        ivc.title = [sender currentTitle];
     }
 }
 
